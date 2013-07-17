@@ -25,4 +25,17 @@
 		$('.rows .row.'+currentPeriod).show();
 	}
 
+	var socketUrl = window.location.protocol+'//'+window.location.host;
+	console.log("connecting to socket "+socketUrl);
+	var socket = io.connect(socketUrl);
+
+	socket.on('connect', function(){
+		console.info('socket connected');
+	});
+
+	socket.on('change:leaders', function(){
+		console.log('socket received change:leaders event');
+		window.location.reload();
+	});
+
 })();

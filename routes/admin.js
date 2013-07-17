@@ -1,5 +1,6 @@
 var personRepository = require('../lib/personRepository');
 var Q                = require('q');
+var server           = require('../index');
 
 exports.index = function(req, res){
 	personRepository.getAll()
@@ -27,4 +28,6 @@ exports.save = function(req, res){
 			res.redirect('.?msg='+encodeURIComponent('Leaderboard updated successfully.'));
 		})
 		.done();
+
+	server.io.sockets.emit('change:leaders');
 };
