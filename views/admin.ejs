@@ -19,18 +19,40 @@
 				<div class="<%= period %>">
 
 					<h2><%= period %></h2>
+					<ol>
 
 					<% _(people).where({ period: period }).sortBy('rank').forEach(function(person){ %>
-						<div class="person">
+						<li class="person">
 							<% personIndex++; %>
 
 							<%- hidden_field_tag('people['+personIndex+'][period]', period) %>
-							<%- text_field_tag('people['+personIndex+'][name]', person.name) %>
-							<%- text_field_tag('people['+personIndex+'][acv]', person.acv) %>
-							<%- text_field_tag('people['+personIndex+'][quota]', person.quota) %>
-						<div>
 
+							<label>
+								<span>Name</span>
+								<%- text_field_tag('people['+personIndex+'][name]', {
+									value: person.name,
+									placeholder: 'ex: Shadi Baqleh' }) %>
+							</label>
+
+							<label>
+								<span>Quota</span>
+								<%- text_field_tag('people['+personIndex+'][quota]', {
+									value: person.quota*100,
+									pattern: '^\\d+$',
+									placeholder: 'ex: 110 (for 110%)' }) %>%
+							</label>
+
+							<label>
+								<span>ACV</span>
+								$<%- text_field_tag('people['+personIndex+'][acv]', {
+									value: person.acv/1000,
+									pattern: '^[\\d\\.]+$',
+									placeholder: 'ex: 50 (for $50,000)' }) %>K
+							</label>
+						</li>
 					<% }); %>
+
+					</ol>
 
 				</div>
 
