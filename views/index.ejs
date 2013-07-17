@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Sales Leaders</title>
+		<link rel='stylesheet' href='stylesheets/style.css' />
+	</head>
+	<body>
+		<h1>Sales Leaders</h1>
+
+		<div class="periods">
+			<div class="quarter"></div>
+			<div class="month"></div>
+		</div>
+
+		<div class="table">
+			<div class="headers">
+				<span class="acv">ACV (K)</span>
+				<span class="quota">Quota</span>
+			</div>
+
+			<div class="rows">
+
+				<% _.forEach(people, function(person){ %>
+
+					<div class="row <%= person.period %> <%= (person.rank === 1 && 'first-row') %>">
+						<span class="rank" ><%= person.rank                        %></span>
+						<span class="name" ><%= person.name                        %></span>
+						<span class="acv"  >$<%= ("    "+Math.round(person.acv/1000)).substr(-3) %></span>
+						<span class="quota"><%= Math.round(person.quota*100) + '%' %></span>
+					</div>
+
+				<% }); %>
+
+			</div>
+		</div>
+	</body>
+</html>

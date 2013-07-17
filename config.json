@@ -1,0 +1,6 @@
+{
+	"dbHost"  : "localhost",
+	"dbName"  : "leaderboard",
+	"dbPort"  : 27017,
+	"wwwPort" : 3000
+}
