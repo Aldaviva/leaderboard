@@ -21,8 +21,8 @@
 		$('.periods div').removeClass('active');
 		$('.periods .'+currentPeriod).addClass('active');
 
-		$('.rows .row').hide();
-		$('.rows .row.'+currentPeriod).show();
+		$('.rows .row').addClass('hidden');
+		$('.rows .row.'+currentPeriod).removeClass('hidden');
 	}
 
 	var socketUrl = window.location.protocol+'//'+window.location.host;

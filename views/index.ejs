@@ -23,7 +23,7 @@
 
 				<% _.forEach(people, function(person){ %>
 
-					<div class="row <%= person.period %> <%= (person.rank === 1 && 'first-row') %>">
+					<div class="row <%= person.period %> <%= (person.rank === 1 ? 'first-row' : '') %>">
 						<span class="rank" ><%= person.rank                                     %></span>
 						<span class="name" ><%= person.name                                     %></span>
 						<span class="quota"><%= Math.round(person.quota*100) + '%'              %></span>

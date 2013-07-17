@@ -15,8 +15,7 @@ app.set('port', config.wwwPort || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 helpers(app);
-// app.use(expressPartials());
-app.use(express.favicon());
+app.use(express.favicon('public/favicon.ico'));
 app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -31,7 +30,7 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-var server = http.createServer(app);
+var server = module.exports = http.createServer(app);
 server.io = io.listen(server, {
 	'log level': 1, // 0 - error, 1 - warn, 2 - info, 3 - debug
 	'transports': ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'],
@@ -40,8 +39,6 @@ server.io = io.listen(server, {
 	'browser client gzip': true
 });
 server.app = app;
-
-module.exports = server;
 
 server.listen(app.get('port'), function(){
 	logger.log('Listening on *:%d.', app.get('port'));

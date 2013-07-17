@@ -19,7 +19,6 @@ exports.save = function(req, res){
 		};
 	});
 
-	//remove existing people from collection
 	personRepository.deleteAll()
 		.then(function(){
 			return Q.all(peopleToInsert.map(personRepository.create));
