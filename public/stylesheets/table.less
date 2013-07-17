@@ -10,20 +10,18 @@
 	position : relative;
 
 	.rank {
-		width: @col_width_rank;
-		text-align: center;
-		margin-right: @col_gap_rank_name;
+		margin-right : @col_gap_rank_name;
+		text-align   : center;
+		width        : @col_width_rank;
 	}
 
 	.acv {
-		/*float        : right;*/
 		margin-right : @col_gap_acv_quota;
 		text-align   : right;
 		width        : @col_width_acv;
 	}
 
 	.quota {
-		/*float      : right;*/
 		text-align : right;
 		width      : @col_width_quota;
 	}
@@ -43,14 +41,11 @@
 	}
 
 	.row {
-
-		/*border: 1px solid green;*/
-		padding: 35px 0;
-
+		align-items : baseline;
 		border-top  : 2px dotted #2a466e; //TODO replace dots with image for better pattern control
-		display: flex;
-		flex-flow: row no-wrap;
-		align-items: baseline;
+		display     : flex;
+		flex-flow   : row no-wrap;
+		padding     : 35px 0;
 
 		.rank {
 			.font-size(80pt);
@@ -65,10 +60,6 @@
 		.acv, .quota {
 			.font-size(70pt);
 			font-family: "Greenback";
-		}
-
-		> span {
-			/*border: 1px solid red;*/
 		}
 
 		&.first-row {

@@ -8,6 +8,36 @@
 	<body>
 		<h1>Sales Leaders</h1>
 
-		<em>Not yet implemented</em>
+		<form method="POST">
+
+			<input type="Submit" value="save" />
+
+			<% var personIndex = 0; %>
+
+			<% _.forEach(["quarter", "month"], function(period){ %>
+
+				<div class="<%= period %>">
+
+					<h2><%= period %></h2>
+
+					<% _(people).where({ period: period }).sortBy('rank').forEach(function(person){ %>
+						<div class="person">
+							<% personIndex++; %>
+
+							<%- hidden_field_tag('people['+personIndex+'][period]', period) %>
+							<%- text_field_tag('people['+personIndex+'][name]', person.name) %>
+							<%- text_field_tag('people['+personIndex+'][acv]', person.acv) %>
+							<%- text_field_tag('people['+personIndex+'][quota]', person.quota) %>
+						<div>
+
+					<% }); %>
+
+				</div>
+
+			<% }); %>
+
+			<input type="Submit" value="save" />
+
+		</form>
 	</body>
 </html>
