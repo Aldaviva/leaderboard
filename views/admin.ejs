@@ -37,7 +37,7 @@
 							<label>
 								<span>Quota</span>
 								<%- text_field_tag('people['+personIndex+'][quota]', {
-									value: person.quota*100,
+									value: Math.round(person.quota*100),
 									pattern: '^\\d+$',
 									placeholder: 'ex: 110 (for 110%)' }) %>%
 							</label>
@@ -45,7 +45,7 @@
 							<label>
 								<span>ACV</span>
 								$<%- text_field_tag('people['+personIndex+'][acv]', {
-									value: person.acv/1000,
+									value: Math.round(person.acv/1000),
 									pattern: '^[\\d\\.]+$',
 									placeholder: 'ex: 50 (for $50,000)' }) %>K
 							</label>
