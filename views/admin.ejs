@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Sales Leaders - Admin</title>
-		<link rel='stylesheet' href='stylesheets/admin.css' />
+		<link rel='stylesheet' href='/stylesheets/admin.css' />
 	</head>
 	<body>
 		<h1><a href="/">Sales Leaders</a> administration</h1>
@@ -27,14 +27,14 @@
 
 							<%- hidden_field_tag('people['+personIndex+'][period]', period) %>
 
-							<label>
+							<label class="name">
 								<span>Name</span>
 								<%- text_field_tag('people['+personIndex+'][name]', {
 									value: person.name,
 									placeholder: 'ex: Shadi Baqleh' }) %>
 							</label>
 
-							<label>
+							<label class="quota">
 								<span>Quota</span>
 								<%- text_field_tag('people['+personIndex+'][quota]', {
 									value: Math.round(person.quota*100),
@@ -42,7 +42,7 @@
 									placeholder: 'ex: 110 (for 110%)' }) %>%
 							</label>
 
-							<label>
+							<label class="acv">
 								<span>ACV</span>
 								$<%- text_field_tag('people['+personIndex+'][acv]', {
 									value: Math.round(person.acv/1000),
