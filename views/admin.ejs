@@ -30,24 +30,21 @@
 							<label class="name">
 								<span>Name</span>
 								<%- text_field_tag('people['+personIndex+'][name]', {
-									value: person.name,
-									placeholder: 'ex: Shadi Baqleh' }) %>
+									value: person.name }) %>
 							</label>
 
 							<label class="quota">
 								<span>Quota</span>
 								<%- text_field_tag('people['+personIndex+'][quota]', {
 									value: Math.round(person.quota*100),
-									pattern: '^\\d+$',
-									placeholder: 'ex: 110 (for 110%)' }) %>%
+									pattern: '^\\d+$' }) %>%
 							</label>
 
 							<label class="acv">
 								<span>ACV</span>
 								$<%- text_field_tag('people['+personIndex+'][acv]', {
 									value: Math.round(person.acv/1000),
-									pattern: '^[\\d\\.]+$',
-									placeholder: 'ex: 50 (for $50,000)' }) %>K
+									pattern: '^[\\d\\.]+$' }) %>K
 							</label>
 						</li>
 					<% }); %>
