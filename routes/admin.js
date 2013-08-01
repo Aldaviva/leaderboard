@@ -19,7 +19,8 @@ exports.save = function(req, res){
 		};
 	});
 
-	personRepository.deleteAll()
+	personRepository
+		.deleteAll()
 		.then(function(){
 			return Q.all(peopleToInsert.map(personRepository.create));
 		})

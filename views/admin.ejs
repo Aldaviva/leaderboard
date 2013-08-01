@@ -14,9 +14,13 @@
 
 			<% var personIndex = 0; %>
 
-			<% _.forEach(["quarter", "month"], function(period){ %>
+			<% _.forEach(["quarter", "month"], function(period, periodIndex){ %>
 
-				<div class="<%= period %>">
+				<% if(periodIndex){ %>
+					<a href="#" class="copyValuesTo <%= period %>">&#8595; copy values to <%= period %> &#8595;</a>
+				<% } %>
+
+				<div class="period <%= period %>">
 
 					<h2><%= period %></h2>
 					<ol>
@@ -53,9 +57,36 @@
 
 				</div>
 
+
+
 			<% }); %>
 
 			<input type="Submit" value="save" />
+
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+			<script type="text/javascript">
+				$(function(){
+
+					$('.copyValuesTo').each(function(){
+						var copyValuesLink = $(this);
+
+						copyValuesLink.click(function(event){
+							event.preventDefault();
+							var originPeriodDiv = copyValuesLink.prev('.period');
+							var destinationPeriodDiv = copyValuesLink.next('.period');
+
+							var originTextFields = originPeriodDiv.find('input[type=text]');
+							var destinationTextFields = destinationPeriodDiv.find('input[type=text]');
+
+							for(var fieldIndex = 0; fieldIndex < originTextFields.length; fieldIndex++){
+								var valueToCopy = $(originTextFields.get(fieldIndex)).val();
+								// console.log("copying value "+value);
+								$(destinationTextFields.get(fieldIndex)).val(valueToCopy);
+							}
+						});
+					});
+				});
+			</script>
 
 		</form>
 	</body>
