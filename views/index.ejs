@@ -21,7 +21,7 @@
 
 			<div class="rows">
 
-				<% _.forEach(people, function(person){ %>
+				<% _(people).filter('name').forEach(function(person){ %>
 
 					<div class="row <%= person.period %> <%= (person.rank === 1 ? 'first-row' : '') %>">
 						<span class="rank" ><%= person.rank                                      %></span>
