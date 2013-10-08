@@ -12,24 +12,23 @@
 
 			<input type="Submit" value="save" />
 
+			<% var CATEGORY_NAMES = ['quarter', 'month', 'rep', 'sdr']; %>
 			<% var personIndex = 0; %>
 
-			<% _.forEach(["quarter", "month"], function(period, periodIndex){ %>
+			<% _.forEach(CATEGORY_NAMES, function(category){ %>
 
-				<% if(periodIndex){ %>
-					<a href="#" class="copyValuesTo <%= period %>">&#8595; copy everything to <%= period %> &#8595;</a>
-				<% } %>
+				<% var people = categories[category]; %>
 
-				<div class="period <%= period %>">
+				<div class="category <%= category %>">
 
-					<h2><%= period %></h2>
+					<h2><%= category %></h2>
 					<ol>
 
-					<% _(people).where({ period: period }).sortBy('rank').forEach(function(person){ %>
+					<% _(people).forEach(function(person){ %>
 						<li class="person">
 							<% personIndex++; %>
 
-							<%- hidden_field_tag('people['+personIndex+'][period]', period) %>
+							<%- hidden_field_tag('people['+personIndex+'][category]', category) %>
 
 							<label class="name">
 								<span>Name</span>
@@ -37,19 +36,38 @@
 									value: person.name }) %>
 							</label>
 
-							<label class="quota">
-								<span>Quota</span>
-								<%- text_field_tag('people['+personIndex+'][quota]', {
-									value: Math.round(person.quota*100),
-									pattern: '^\\d+$' }) %>%
+							<label class="office">
+								<span>Office</span>
+								<%- text_field_tag('people['+personIndex+'][office]', {
+									value: person.office }) %>
 							</label>
 
-							<label class="acv">
-								<span>ACV</span>
-								$<%- text_field_tag('people['+personIndex+'][acv]', {
-									value: Math.round(person.acv/1000),
-									pattern: '^[\\d\\.]+$' }) %>K
-							</label>
+							<% if(category == 'quarter' || category == 'month') { %>
+
+								<label class="quota">
+									<span>Quota</span>
+									<%- text_field_tag('people['+personIndex+'][quota]', {
+										value: Math.round(person.quota*100),
+										pattern: '^\\d+$' }) %>%
+								</label>
+
+								<label class="acv">
+									<span>ACV</span>
+									$<%- text_field_tag('people['+personIndex+'][acv]', {
+										value: Math.round(person.acv/1000),
+										pattern: '^[\\d\\.]+$' }) %>K
+								</label>
+
+							<% } else if(category == 'sdr' || category == 'rep' ) { %>
+
+								<label class="leads">
+									<span>Leads</span>
+									<%- text_field_tag('people['+personIndex+'][leads]', {
+										value: person.leads,
+										pattern: '^\\d+$' }) %>
+								</label>
+
+							<% } %>
 						</li>
 					<% }); %>
 
@@ -64,27 +82,47 @@
 			<input type="Submit" value="save" />
 
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+			<script src="scripts/thirdparty/typeahead.min.js" type="text/javascript"></script>
 			<script type="text/javascript">
 				$(function(){
 
-					$('.copyValuesTo').each(function(){
-						var copyValuesLink = $(this);
+					$.getJSON("http://10.4.4.251:3001/floorplan/people") //TODO point to production floorplan after CORS is enabled
+						.done(function(people){
 
-						copyValuesLink.click(function(event){
-							event.preventDefault();
-							var originPeriodDiv = copyValuesLink.prev('.period');
-							var destinationPeriodDiv = copyValuesLink.next('.period');
+							var salespeople = people.filter(function(person){
+								return (person.tags.indexOf) && (person.tags.indexOf('sale') >= 0);
+							});
 
-							var originTextFields = originPeriodDiv.find('input[type=text]');
-							var destinationTextFields = destinationPeriodDiv.find('input[type=text]');
+							var dataset = {
+								name: 'people',
+								local: people,
+								valueKey: 'fullname'
+							};
 
-							for(var fieldIndex = 0; fieldIndex < originTextFields.length; fieldIndex++){
-								var valueToCopy = $(originTextFields.get(fieldIndex)).val();
-								// console.log("copying value "+value);
-								$(destinationTextFields.get(fieldIndex)).val(valueToCopy);
-							}
+							var nameEditEvents = {
+								"typeahead:autocompleted": function(event, person){
+									var officeInput = $(this).closest('.person').find('.office input');
+									officeInput.val(person.office || "");
+								},
+								//convert Enter to Tab
+								"keypress": function(event){
+									if(event.keyCode == 13){ //enter
+										event.preventDefault();
+										var tabEvent = $.Event("keydown");
+										tabEvent.which = 9; //tab
+										$(this).trigger(tabEvent);
+									}
+								}
+							};
+
+							$(".name input")
+								.typeahead(dataset)
+								.bind(nameEditEvents);
+						})
+						.fail(function(jqXHR, textStatus, err){
+							console.error("failed to download list of people", textStatus, err);
+							console.error(jqXHR);
 						});
-					});
 				});
 			</script>
 

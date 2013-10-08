@@ -1,28 +1,34 @@
 (function(){
 
 	var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+	var CATEGORIES = ['quarter', 'month', 'rep', 'sdr'];
 	
-	var currentPeriod = 'month';
+	var currentCategory;
+	setCategory(CATEGORIES[0]);
 	render();
 
-	setInterval(togglePeriod, 15*1000);
-	$('.periods div').click(togglePeriod);
+	setInterval(cycleCategory, 15*1000);
+	CATEGORIES.forEach(function(categoryName){
+		$('.categories .'+categoryName).click(function(){ setCategory(categoryName); });
+	});
 
-	function togglePeriod(){
-		currentPeriod = (currentPeriod == 'month') ? 'quarter' : 'month';
+	function cycleCategory(){
+		setCategory(CATEGORIES[(CATEGORIES.indexOf(currentCategory) + 1) % CATEGORIES.length]);
+	}
+
+	function setCategory(category){
+		var body = $(document.body);
+		body.removeClass(currentCategory);
+		currentCategory = category;
+		body.addClass(currentCategory);
 		render();
 	}
 
 	function render(){
 		var now = new Date();
-		$('.periods .quarter').text('Q' + Math.ceil((now.getMonth() + 1)/3));
-		$('.periods .month').text(MONTH_NAMES[now.getMonth()]);
-
-		$('.periods div').removeClass('active');
-		$('.periods .'+currentPeriod).addClass('active');
-
-		$('.rows .row').addClass('hidden');
-		$('.rows .row.'+currentPeriod).removeClass('hidden');
+		$('.categories .quarter').text('Q' + Math.ceil((now.getMonth() + 1)/3));
+		$('.categories .month').text(MONTH_NAMES[now.getMonth()]);
 	}
 
 	var socketUrl = window.location.protocol+'//'+window.location.host;

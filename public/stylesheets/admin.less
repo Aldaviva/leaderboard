@@ -1,3 +1,9 @@
+body {
+	background: hsl(0, 0%, 98%);
+	font: 1em sans-serif;
+}
+
+
 h1 {
 
 }
@@ -12,7 +18,7 @@ ol {
 	}
 
 	label {
-		> span::after {
+		> span:first-child::after {
 			content: ':';
 		}
 
@@ -30,6 +36,12 @@ h2 {
 	text-transform: capitalize;
 }
 
+input[type=text] {
+	border: 1px solid hsl(0, 0%, 80%);
+	background: white;
+	/*display: inline-block;*/
+}
+
 input[type=submit] {
 	font-size: 1.5em;
 	padding: 0.2em 0.8em;
@@ -38,6 +50,12 @@ input[type=submit] {
 .name {
 	input {
 		width: 10em;
+	}
+}
+
+.office {
+	input {
+		width: 2em;
 	}
 }
 
@@ -53,8 +71,24 @@ input[type=submit] {
 	}
 }
 
+.leads {
+	input {
+		width: 2em;
+	}
+}
+
 .copyValuesTo {
 	width: 700px;
 	display: block;
 	text-align: center;
+}
+
+
+.twitter-typeahead {
+	vertical-align: top;
+
+	.tt-dropdown-menu {
+		//typeahead doesn't allow us to turn off the suggestion dropdown, so hide it
+		display: none !important;
+	}
 }

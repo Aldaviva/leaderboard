@@ -8,26 +8,46 @@
 	<body>
 		<h1>Sales Leaders</h1>
 
-		<div class="periods">
+		<div class="categories">
 			<div class="quarter"></div>
 			<div class="month"></div>
+			<div class="rep">Reps</div>
+			<div class="sdr">SDRs</div>
 		</div>
 
 		<div class="table">
 			<div class="headers">
-				<span class="quota">Quota</span>
+				<span class="quota ">Quota</span>
 				<span class="acv">ACV (K)</span>
+				<span class="leads">Leads</span>
 			</div>
 
 			<div class="rows">
 
-				<% _(people).filter('name').forEach(function(person){ %>
+				<% _(categories).forEach(function(people, category){ %>
 
-					<div class="row <%= person.period %> <%= (person.rank === 1 ? 'first-row' : '') %>">
-						<span class="rank" ><%= person.rank                                      %></span>
-						<span class="name" ><%= person.name                                      %></span>
-						<span class="quota"><%= Math.round(person.quota*100) + '%'               %></span>
-						<span class="acv"  >$<%= ("    "+Math.round(person.acv/1000)).substr(-3) %></span>
+					<div class="rowGroup <%= category %>">
+
+					<% _(people).forEach(function(person, rank){ %>
+
+						<div class="person">
+							<span class="rank" ><%= rank+1 %></span>
+							<span class="name" ><%= person.name %>
+								<% if(person.office) { %>
+									<span class="office"><%= person.office %></span>
+								<% } %>
+							</span>
+
+							<% if(category == 'month' || category == 'quarter') { %>
+								<span class="quota"><%= Math.round(person.quota*100) + '%' %></span>
+								<span class="acv">$<%= ("    "+Math.round(person.acv/1000)).substr(-3) %></span>
+							<% } else if(category == 'sdr' || category == 'rep') { %>
+								<span class="leads"><%= person.leads %></span>
+							<% } %>
+						</div>
+
+					<% }); %>
+
 					</div>
 
 				<% }); %>

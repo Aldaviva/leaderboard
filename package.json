@@ -1,6 +1,6 @@
 {
 	"name"    : "leaderboard",
-	"version" : "1.0.4",
+	"version" : "1.1.0",
 	"author"  : "Ben Hutchison <ben@bluejeans.com>",
 	"dependencies": {
 		"ejs"             : "0.8.4",

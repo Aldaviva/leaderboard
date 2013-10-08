@@ -1,12 +1,13 @@
 .table {
 	@col_width_rank: 51px;
 	@col_width_acv: 170px;
+	@col_width_leads: 170px;
 	@col_width_quota: 170px;
 
 	@col_gap_rank_name: 70px;
 	@col_gap_acv_quota: 172px;
 
-	margin   : 173px 78px 0;
+	margin   : 193px 78px 0;
 	position : relative;
 
 	.rank {
@@ -18,6 +19,11 @@
 	.acv {
 		text-align   : right;
 		width        : @col_width_acv;
+	}
+
+	.leads {
+		text-align   : right;
+		width        : @col_width_leads;
 	}
 
 	.quota {
@@ -40,7 +46,11 @@
 		}
 	}
 
-	.row {
+	.rowGroup {
+		display: none; //made visible by body class in page.less
+	}
+
+	.person {
 		display             : -ms-flexbox;
 
 		display             : -webkit-flex;
@@ -79,13 +89,20 @@
 			flex         : 1;
 		}
 
-		.acv, .quota {
+		.office {
+			text-transform: uppercase;
+			font-family: "Gotham Extra Light";
+			font-size: 46px;
+			margin-left: 20px;
+		}
+
+		.acv, .quota, .leads {
 			.font-size(70pt);
 			font-family: "Greenback";
 			white-space: pre;
 		}
 
-		&.first-row {
+		&:first-child {
 			border-top: none;
 		}
 

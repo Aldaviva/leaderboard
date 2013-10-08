@@ -14,13 +14,13 @@ h1 {
 	width       : 825px;
 }
 
-.periods {
+.categories {
 	.font-size(40pt);
 	color          : #2a456c;
 	left           : 900px;
 	position       : absolute;
 	text-transform : uppercase;
-	top            : 50px;
+	top            : 40px;
 
 	> div {
 		cursor         : pointer;
@@ -31,9 +31,35 @@ h1 {
 			margin-left: 50px;
 		}
 	}
+}
 
-	.active {
-		background : url(../images/period_chevron.png) no-repeat 50% 100%;
-		color      : #70b6ff;
+.activeCategory(){
+	background : url(../images/period_chevron.png) no-repeat 50% 100%;
+	color      : #70b6ff;
+}
+
+body {
+	&.quarter .categories .quarter { .activeCategory(); }
+	&.month   .categories .month   { .activeCategory(); }
+	&.rep     .categories .rep     { .activeCategory(); }
+	&.sdr     .categories .sdr     { .activeCategory(); }
+
+	&.quarter .rowGroup.quarter { display: block; }
+	&.month   .rowGroup.month   { display: block; }
+	&.rep     .rowGroup.rep     { display: block; }
+	&.sdr     .rowGroup.sdr     { display: block; }
+
+	&.quarter, &.month {
+		.table .headers .leads {
+			display: none;
+		}
+	}
+
+	&.rep, &.sdr {
+		.table .headers {
+			.quota, .acv {
+				display: none;
+			}
+		}
 	}
 }
