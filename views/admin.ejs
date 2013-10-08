@@ -86,7 +86,7 @@
 			<script type="text/javascript">
 				$(function(){
 
-					$.getJSON("http://10.4.4.251:3001/floorplan/people") //TODO point to production floorplan after CORS is enabled
+					$.getJSON("http://floorplan.bluejeansnet.com/floorplan/people") //TODO point to production floorplan after CORS is enabled
 						.done(function(people){
 
 							var salespeople = people.filter(function(person){
